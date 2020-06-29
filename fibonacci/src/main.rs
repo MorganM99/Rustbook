@@ -1,15 +1,12 @@
 use std::env;
 
 fn fibonacci(n: u32) -> u32 {
-    let mut res: u32 = 0;
     if n == 0 {
-        return res;
+        return 0;
     } else if n == 1 {
-        res = 1;
-        return res;
+        return 1;
     } else {
-        res = fibonacci(n - 1) + fibonacci(n - 2);
-        return res;
+        return fibonacci(n - 1) + fibonacci(n - 2);
     }
 }
 
