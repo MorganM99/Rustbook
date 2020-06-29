@@ -20,28 +20,28 @@ fn second_word(s: &str) -> &str {
     let mut start_index: usize = 0;
     let mut end_index: usize = 0;
     //Flag to signify if second word found
-    let mut second_found: bool=false;
+    let mut second_found: bool = false;
 
     let bytes = s.as_bytes();
 
     //Enumerate over the string
     for (i, &item) in bytes.iter().enumerate() {
         //Finds space when second word not found yet
-        if item == b' ' && !second_found{
+        if item == b' ' && !second_found {
             //Set index points to one after the space
             start_index = i + 1;
             end_index = i + 1;
             //Flag that second word has been found
-            second_found=true;
+            second_found = true;
             //Loop to next character
             continue;
-        } 
+        }
         //When second word found
-        else if second_found{
+        else if second_found {
             //Check if at space or at end of string (Only two words)
-            if item==b' ' || i==s.len()-1{
+            if item == b' ' || i == s.len() - 1 {
                 //Move end_index to end of second word
-                end_index+=1;
+                end_index += 1;
                 //Return the second word
                 return &s[start_index..end_index];
             }
@@ -61,8 +61,12 @@ fn main() {
         .expect("Input reading has failed!");
     //Take off trailing whitespace for the functions
     let input_string = input_string.trim();
-    let first_word = first_word(input_string);
-    let second_word = second_word(input_string);
-    println!("The first word is: {}", first_word);
-    println!("The second word is: {}", second_word);
+    if input_string.is_empty() {
+        println!("String is empty!")
+    } else {
+        let first_word = first_word(input_string);
+        let second_word = second_word(input_string);
+        println!("The first word is: {}", first_word);
+        println!("The second word is: {}", second_word);
+    }
 }
