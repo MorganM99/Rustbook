@@ -10,10 +10,10 @@ fn vec_mean(v: &[i32]) -> f32 {
         count += 1.0;
     }
     let avg: f32 = sum / count;
-    return avg;
+    avg
 }
 
-fn vec_median(v: &mut Vec<i32>) -> f32 {
+fn vec_median(v: &mut [i32]) -> f32 {
     v.sort();
     let mid = v.len() / 2;
     if v.len() % 2 == 0 {
@@ -23,23 +23,18 @@ fn vec_median(v: &mut Vec<i32>) -> f32 {
     }
 }
 
-//Note: If multiple modes, picks the first it finds (Hash maps arent ordered so the first it finds may be unexpected.)
-//Not sure how to fix this yet
-fn vec_mode(v: &[i32]) -> i32 {
+fn vec_mode(v: &[i32]) -> Vec<i32> {
     let mut mode_map = HashMap::new();
     for i in v {
         let count = mode_map.entry(i).or_insert(0);
         *count += 1;
     }
-    let mut mode: i32 = 0;
-    let mut mode_occurrences: i32 = 0;
-    for (element, counter) in &mode_map {
-        if *counter > mode_occurrences {
-            mode_occurrences = *counter;
-            mode = **element;
-        }
-    }
-    return mode;
+    let max_value = mode_map.values().cloned().max().unwrap_or(0);
+    mode_map
+        .into_iter()
+        .filter(|&(_, v)| v == max_value)
+        .map(|(&k, _)| k)
+        .collect()
 }
 
 fn main() {
@@ -71,5 +66,5 @@ fn main() {
 
     println! {"Mean: {}",vec_mean(&v)};
     println! {"Median: {}",vec_median(&mut v)};
-    println! {"Mode: {}",vec_mode(&v)};
+    println! {"Mode: {:?}",vec_mode(&v)};
 }
