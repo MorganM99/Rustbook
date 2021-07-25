@@ -4,7 +4,7 @@ use std::io;
 
 fn main() {
     println!("Guess the number!");
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
     loop {
         println!("Please input your guess, or type 'quit' to exit:");
         let mut guess = String::new();
@@ -12,8 +12,8 @@ fn main() {
         io::stdin()
             .read_line(&mut guess)
             .expect("Failed to read line");
-        
-        if guess.trim()=="quit"{
+
+        if guess.trim() == "quit" {
             println!("Quitting...");
             break;
         }
